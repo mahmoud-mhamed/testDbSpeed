@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('/test-full-text',\App\Actions\FullTextAction::class)->name('test-full-text');
+Route::post('/search',\App\Actions\SearchStoreAction::class)->name('search');

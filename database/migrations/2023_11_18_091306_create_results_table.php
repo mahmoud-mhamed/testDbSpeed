@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->string('search_key');
-            $table->string('search_type');
-            $table->string('time');
-            $table->string('query');
-            $table->string('type');
+            $table->string('search_key')->nullable();
+            $table->string('search_type')->nullable();
+            $table->string('time')->nullable();
+            $table->string('query')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

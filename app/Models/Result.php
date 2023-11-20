@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string search_key
+ * @property string search_type
  * @property string time
  * @property string query
  * @property string type
