@@ -14,12 +14,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string title_full_index
  * @property string description_full_index
 */
-class TestFullText extends Model
+class Lorem extends Model
 {
     use HasFactory;
     protected $fillable= [
-        'title_full', 'description_full',
         'title', 'description',
+        'title_full', 'description_full',
         'title_index', 'description_index',
         'title_full_index', 'description_full_index'
     ];

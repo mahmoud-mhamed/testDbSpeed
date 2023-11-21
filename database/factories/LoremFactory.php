@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\TestFullText;
-use Database\Seeders\TestFullTextSeeder;
+use App\Models\Lorem;
+use Database\Seeders\LoremSeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TestFullText>
- * @mixin TestFullTextSeeder
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Lorem>
+ * @mixin LoremSeeder
  */
-class TestFullTextFactory extends Factory
+class LoremFactory extends Factory
 {
 
-    protected $model=TestFullText::class;
+    protected $model=Lorem::class;
     /**
      * Define the model's default state.
      *

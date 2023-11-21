@@ -10,15 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::dropIfExists('test_full_texts');
-        Schema::create('test_full_texts', function (Blueprint $table) {
+        Schema::dropIfExists('lorems');
+        Schema::create('lorems', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('description');
+
             $table->string('title_full');
             $table->string('description_full');
             $table->fullText(['title_full', 'description_full']);
 
-            $table->string('title');
-            $table->string('description');
 
             $table->string('title_index');
             $table->string('description_index');
@@ -36,6 +37,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('test_full_texts');
+        Schema::dropIfExists('lorems');
     }
 };

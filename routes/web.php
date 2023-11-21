@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test-full-text',\App\Actions\FullTextAction::class)->name('test-full-text');
+Route::get('/lorem',\App\Actions\LoremIndexAction::class)->name('lorem');
 Route::post('/search',\App\Actions\SearchStoreAction::class)->name('search');
 Route::get('/truncate-result',\App\Actions\TruncateResultAction::class)->name('truncate-result');

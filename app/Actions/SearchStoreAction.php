@@ -4,7 +4,7 @@ namespace App\Actions;
 
 use App\Enums\ResultSearchTypeEnum;
 use App\Models\Result;
-use App\Models\TestFullText;
+use App\Models\Lorem;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -63,13 +63,13 @@ class SearchStoreAction
             'type' => null,
             'search_key' => null,
             'search_type' => ResultSearchTypeEnum::FIRST,
-            ...$this->getQueryLog(TestFullText::query(), 'first')
+            ...$this->getQueryLog(Lorem::query(), 'first')
         ]);
     }
 
     private function storeLastRowSpeed(): void
     {
-        $query = TestFullText::query()->latest();
+        $query = Lorem::query()->latest();
         Result::query()->create([
             'type' => null,
             'search_key' => null,
@@ -79,7 +79,7 @@ class SearchStoreAction
     }
     private function storeLastByIdRowSpeed(): void
     {
-        $query = TestFullText::query()->orderByDesc('id');
+        $query = Lorem::query()->orderByDesc('id');
         Result::query()->create([
             'type' => null,
             'search_key' => null,
