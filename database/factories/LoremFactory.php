@@ -21,7 +21,7 @@ class LoremFactory extends Factory
      */
     public function definition(): array
     {
-        $title=fake()->title(50);
+        $title=fake()->text(50);
         $description=fake()->text(100);
         return [
             'title' => $title,

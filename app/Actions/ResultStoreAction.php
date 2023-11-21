@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Enums\ResultSearchTypeEnum;
+use App\Enums\ResultTypeEnum;
 use App\Models\Result;
 use App\Models\Lorem;
 use Illuminate\Support\Facades\DB;
@@ -34,19 +35,28 @@ class ResultStoreAction
         $this->storeFirstRowSpeed();
         $this->storeLastRowSpeed();
         $this->storeLastByIdRowSpeed();
+        $this->storeNormalLikeOneColumn($key);
+        $this->storeFullTextLikeColumn($key);
     }
 
     public function getQueryLog($query, ResultSearchTypeEnum $searchTypeEnum=ResultSearchTypeEnum::FIRST,$key=null,$find_id=null)
     {
         DB::connection()->enableQueryLog();
         if ($searchTypeEnum === ResultSearchTypeEnum::FIRST) {
-            $query->clone()->first();
+            $r=$query->clone()->first();
+            $count=$r?1:0;
         } elseif ($searchTypeEnum === ResultSearchTypeEnum::LAST) {
-            $query->clone()->latest()->first();
+            $r=$query->clone()->latest()->first();
+            $count=$r?1:0;
         }elseif ($searchTypeEnum === ResultSearchTypeEnum::FIND) {
-            $query->clone()->find($find_id);
+            $r=$query->clone()->find($find_id);
+            $count=$r?1:0;
         }elseif ($searchTypeEnum === ResultSearchTypeEnum::FIND_IN_TOP) {
-            $query->clone()->find($find_id);
+            $r=$query->clone()->find($find_id);
+            $count=$r?1:0;
+        }elseif ($searchTypeEnum === ResultSearchTypeEnum::GET) {
+            $r=$query->clone()->get();
+            $count=count($r);
         }else{
             dd($searchTypeEnum);
         }
@@ -59,6 +69,7 @@ class ResultStoreAction
             $replace[] = '?';
         }
         $result['query'] = str_replace($replace, $queries[$count_q]['bindings'], $el_query);
+        $result['count'] = $count;
         DB::connection()->disableQueryLog();
         if ($key){
             dd($queries);
@@ -103,6 +114,26 @@ class ResultStoreAction
             'search_key' => null,
             'search_type' => ResultSearchTypeEnum::LAST_BY_ID,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::FIRST)
+        ]);
+    }
+    private function storeNormalLikeOneColumn($key): void
+    {
+        $query = Lorem::query()->where('title','like',"%$key%");
+        Result::query()->create([
+            'type' => ResultTypeEnum::NORMAL_LIKE_ONE_COLUMN,
+            'search_key' => $key,
+            'search_type' => ResultSearchTypeEnum::GET,
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
+        ]);
+    }
+    private function storeFullTextLikeColumn($key): void
+    {
+        $query = Lorem::query()->whereFullText(['title_full','description_full'],"%$key%");
+        Result::query()->create([
+            'type' => ResultTypeEnum::FULL_TEXT_LIKE,
+            'search_key' => $key,
+            'search_type' => ResultSearchTypeEnum::GET,
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
         ]);
     }
 }

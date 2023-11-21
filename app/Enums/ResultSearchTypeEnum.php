@@ -12,4 +12,5 @@ enum ResultSearchTypeEnum: string
     case FIRST='first';
     case LAST='lastByLatest';
     case LAST_BY_ID='lastById';
+    case GET='get';
 }

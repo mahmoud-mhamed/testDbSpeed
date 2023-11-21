@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Models\Result;
-use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class TruncateResultAction
@@ -12,7 +11,7 @@ class TruncateResultAction
 
     public function handle()
     {
-        DB::table('results')->truncate();
+        Result::truncate();
         return back();
     }
 }

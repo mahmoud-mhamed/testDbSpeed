@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('time')->nullable();
             $table->string('query')->nullable();
             $table->string('type')->nullable();
+            $table->integer('count')->nullable();
             $table->timestamps();
         });
     }

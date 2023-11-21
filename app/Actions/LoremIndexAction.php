@@ -24,6 +24,10 @@ class LoremIndexAction
         $averages[]=$this->getAvg(ResultSearchTypeEnum::LAST_BY_ID);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::FIND);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::FIND_IN_TOP);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::NORMAL_LIKE_ONE_COLUMN);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::FULL_TEXT_LIKE);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::INDEX_LIKE_ONE_COLUMN);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::FULL_TEXT_INDEX_LIKE);
         return view('lorem',compact('results','total_row','averages'));
     }
 
