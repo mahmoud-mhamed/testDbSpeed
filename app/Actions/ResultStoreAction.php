@@ -34,7 +34,6 @@ class ResultStoreAction
         $this->storeFindById(1,ResultSearchTypeEnum::FIND_IN_TOP);
         $this->storeFirstRowSpeed();
         $this->storeLastRowSpeed();
-        $this->storeLastByIdRowSpeed();
         $this->storeNormalLikeOneColumn($key);
         $this->storeFullTextLikeColumn($key);
     }
@@ -46,7 +45,7 @@ class ResultStoreAction
             $r=$query->clone()->first();
             $count=$r?1:0;
         } elseif ($searchTypeEnum === ResultSearchTypeEnum::LAST) {
-            $r=$query->clone()->latest()->first();
+            $r=$query->clone()->latest('id')->first();
             $count=$r?1:0;
         }elseif ($searchTypeEnum === ResultSearchTypeEnum::FIND) {
             $r=$query->clone()->find($find_id);
@@ -103,16 +102,6 @@ class ResultStoreAction
             'type' => null,
             'search_key' => null,
             'search_type' => ResultSearchTypeEnum::LAST,
-            ...$this->getQueryLog($query, ResultSearchTypeEnum::FIRST)
-        ]);
-    }
-    private function storeLastByIdRowSpeed(): void
-    {
-        $query = Lorem::query()->orderByDesc('id');
-        Result::query()->create([
-            'type' => null,
-            'search_key' => null,
-            'search_type' => ResultSearchTypeEnum::LAST_BY_ID,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::FIRST)
         ]);
     }

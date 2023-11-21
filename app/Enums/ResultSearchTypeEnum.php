@@ -10,7 +10,6 @@ enum ResultSearchTypeEnum: string
     case FIND='find';
     case FIND_IN_TOP='find_in_top';
     case FIRST='first';
-    case LAST='lastByLatest';
-    case LAST_BY_ID='lastById';
+    case LAST='last';
     case GET='get';
 }
