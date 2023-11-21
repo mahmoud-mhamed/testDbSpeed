@@ -14,6 +14,10 @@
                     </div>
                     <div>
                         <button class="border p-2 rounded-md text-sky-700 bg-amber-100" type="submit">Save</button>
+
+                        <a href="{{route('truncate-result')}}" class="px-6 inline-block py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-400 rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                            Truncate Result
+                        </a>
                     </div>
                 </form>
             </div>

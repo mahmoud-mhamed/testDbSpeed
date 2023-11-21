@@ -21,6 +21,7 @@ class FullTextAction
         $averages=[];
         $averages[]=$this->getAvg(ResultSearchTypeEnum::FIRST);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::LAST);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::LAST_BY_ID);
         return view('full_text',compact('results','total_row','averages'));
     }
 
@@ -33,7 +34,7 @@ class FullTextAction
             'min'=>$this->roundTime($query->clone()->min('time')),
             'max'=>$this->roundTime($query->clone()->max('time')),
             'count'=>$query->clone()->count(),
-            'first_query'=>SearchStoreAction::make()->getQueryLog($query,'last')['query'],
+            'first_query'=>$query->first()?->query,
         ];
     }
 

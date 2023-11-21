@@ -10,5 +10,6 @@ enum ResultSearchTypeEnum: string
     case LIKE='like';
     case FIND='find';
     case FIRST='first';
-    case LAST='last';
+    case LAST='lastByLatest';
+    case LAST_BY_ID='lastById';
 }

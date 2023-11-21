@@ -23,9 +23,15 @@ class SearchStoreAction
     public function handle(ActionRequest $request)
     {
         $search_key = $request->validated()['search'];
+        $this->storeSearch($search_key);
+        return redirect()->back();
+    }
+
+    public function storeSearch($key): void
+    {
         $this->storeFirstRowSpeed();
         $this->storeLastRowSpeed();
-        return redirect()->back();
+        $this->storeLastByIdRowSpeed();
     }
 
     public function getQueryLog($query, $get_type = 'first')
@@ -68,6 +74,16 @@ class SearchStoreAction
             'type' => null,
             'search_key' => null,
             'search_type' => ResultSearchTypeEnum::LAST,
+            ...$this->getQueryLog($query, 'first')
+        ]);
+    }
+    private function storeLastByIdRowSpeed(): void
+    {
+        $query = TestFullText::query()->orderByDesc('id');
+        Result::query()->create([
+            'type' => null,
+            'search_key' => null,
+            'search_type' => ResultSearchTypeEnum::LAST_BY_ID,
             ...$this->getQueryLog($query, 'first')
         ]);
     }
