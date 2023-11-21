@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class SearchStoreAction
+class ResultStoreAction
 {
     use AsAction;
 

@@ -6,7 +6,6 @@ use App\Enums\ResultSearchTypeEnum;
 use App\Enums\ResultTypeEnum;
 use App\Models\Result;
 use App\Models\Lorem;
-use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class LoremIndexAction
@@ -15,6 +14,7 @@ class LoremIndexAction
 
     public function handle()
     {
+        ResultStoreAction::make()->storeSearch('test');
         $total_row=Lorem::query()->count();
         $results=Result::orderBy('id','desc')->paginate(10);
 

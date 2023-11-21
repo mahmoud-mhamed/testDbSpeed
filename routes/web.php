@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/lorem',\App\Actions\LoremIndexAction::class)->name('lorem');
-Route::post('/search',\App\Actions\SearchStoreAction::class)->name('search');
+Route::post('/search',\App\Actions\ResultStoreAction::class)->name('search');
 Route::get('/truncate-result',\App\Actions\TruncateResultAction::class)->name('truncate-result');
