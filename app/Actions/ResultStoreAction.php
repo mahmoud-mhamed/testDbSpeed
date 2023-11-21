@@ -97,7 +97,7 @@ class ResultStoreAction
 
     private function storeLastRowSpeed(): void
     {
-        $query = Lorem::query()->latest();
+        $query = Lorem::query()->latest('id');
         Result::query()->create([
             'type' => null,
             'search_key' => null,
