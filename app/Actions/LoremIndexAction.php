@@ -14,7 +14,7 @@ class LoremIndexAction
 
     public function handle()
     {
-        ResultStoreAction::make()->storeSearch('test');
+//        ResultStoreAction::make()->storeSearch('test');
         $total_row=Lorem::query()->count();
         $results=Result::orderBy('id','desc')->paginate(10);
 
@@ -22,6 +22,8 @@ class LoremIndexAction
         $averages[]=$this->getAvg(ResultSearchTypeEnum::FIRST);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::LAST);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::LAST_BY_ID);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::FIND);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::FIND_IN_TOP);
         return view('lorem',compact('results','total_row','averages'));
     }
 

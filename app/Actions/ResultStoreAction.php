@@ -29,20 +29,26 @@ class ResultStoreAction
 
     public function storeSearch($key): void
     {
+        $this->storeFindById(1000000,ResultSearchTypeEnum::FIND);
+        $this->storeFindById(1,ResultSearchTypeEnum::FIND_IN_TOP);
         $this->storeFirstRowSpeed();
         $this->storeLastRowSpeed();
         $this->storeLastByIdRowSpeed();
     }
 
-    public function getQueryLog($query, $get_type = 'first')
+    public function getQueryLog($query, ResultSearchTypeEnum $searchTypeEnum=ResultSearchTypeEnum::FIRST,$key=null,$find_id=null)
     {
         DB::connection()->enableQueryLog();
-        if ($get_type === 'first') {
+        if ($searchTypeEnum === ResultSearchTypeEnum::FIRST) {
             $query->clone()->first();
-        } elseif ($get_type === 'last') {
+        } elseif ($searchTypeEnum === ResultSearchTypeEnum::LAST) {
             $query->clone()->latest()->first();
+        }elseif ($searchTypeEnum === ResultSearchTypeEnum::FIND) {
+            $query->clone()->find($find_id);
+        }elseif ($searchTypeEnum === ResultSearchTypeEnum::FIND_IN_TOP) {
+            $query->clone()->find($find_id);
         }else{
-            dd($get_type);
+            dd($searchTypeEnum);
         }
         $queries = DB::getQueryLog();
         $count_q = count($queries) - 1;
@@ -54,6 +60,9 @@ class ResultStoreAction
         }
         $result['query'] = str_replace($replace, $queries[$count_q]['bindings'], $el_query);
         DB::connection()->disableQueryLog();
+        if ($key){
+            dd($queries);
+        }
         return $result;
     }
 
@@ -63,7 +72,16 @@ class ResultStoreAction
             'type' => null,
             'search_key' => null,
             'search_type' => ResultSearchTypeEnum::FIRST,
-            ...$this->getQueryLog(Lorem::query(), 'first')
+            ...$this->getQueryLog(Lorem::query(), ResultSearchTypeEnum::FIRST)
+        ]);
+    }
+    private function storeFindById($id,ResultSearchTypeEnum $resultSearchTypeEnum): void
+    {
+        Result::query()->create([
+            'type' => null,
+            'search_key' => null,
+            'search_type' => $resultSearchTypeEnum,
+            ...$this->getQueryLog(Lorem::query(),  $resultSearchTypeEnum,find_id: $id)
         ]);
     }
 
@@ -74,7 +92,7 @@ class ResultStoreAction
             'type' => null,
             'search_key' => null,
             'search_type' => ResultSearchTypeEnum::LAST,
-            ...$this->getQueryLog($query, 'first')
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::FIRST)
         ]);
     }
     private function storeLastByIdRowSpeed(): void
@@ -84,7 +102,7 @@ class ResultStoreAction
             'type' => null,
             'search_key' => null,
             'search_type' => ResultSearchTypeEnum::LAST_BY_ID,
-            ...$this->getQueryLog($query, 'first')
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::FIRST)
         ]);
     }
 }
