@@ -33,7 +33,7 @@ class FullTextAction
             'min'=>$this->roundTime($query->clone()->min('time')),
             'max'=>$this->roundTime($query->clone()->max('time')),
             'count'=>$query->clone()->count(),
-            'first_query'=>SearchStoreAction::make()->getQueryLog($query,'first')['query'],
+            'first_query'=>SearchStoreAction::make()->getQueryLog($query,'last')['query'],
         ];
     }
 
