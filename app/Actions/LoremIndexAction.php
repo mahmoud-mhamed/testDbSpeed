@@ -39,8 +39,11 @@ class LoremIndexAction
             'avg'=>$this->roundTime($query->clone()->avg('time')),
             'min'=>$this->roundTime($query->clone()->min('time')),
             'max'=>$this->roundTime($query->clone()->max('time')),
+            'avg_count'=>round($query->clone()->avg('count')),
             'count'=>$query->clone()->count(),
             'first_query'=>$query->first()?->query,
+            'resultSearchTypeEnum'=>$resultSearchTypeEnum,
+            'resultTypeEnum'=>$resultTypeEnum,
         ];
     }
 

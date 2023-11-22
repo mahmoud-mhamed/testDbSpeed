@@ -26,7 +26,7 @@
         </div>
         <section class="grid md:grid-cols-4 mt-3 gap-4">
             @foreach($averages as $item)
-                <x-card-avg :name="$item['name']" :avg="$item['avg']" :count="$item['count']" :min="$item['min']"
+                <x-card-avg :name="$item['name']" :data="$item" :avg="$item['avg']" :count="$item['count']" :min="$item['min']"
                             :max="$item['max']" :first_query="$item['first_query']"/>
             @endforeach
         </section>
