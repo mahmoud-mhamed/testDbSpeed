@@ -19,6 +19,14 @@ return new class extends Migration {
             $table->string('title_full');
             $table->string('description_full');
             $table->fullText(['title_full', 'description_full']);
+            $table->fullText(['title_full']);
+            $table->fullText(['description_full']);
+
+
+            $table->string('title_full_one');
+            $table->string('description_full_one');
+            $table->fullText(['title_full_one']);
+            $table->fullText(['description_full_one']);
 
 
             $table->string('title_index');
@@ -26,6 +34,8 @@ return new class extends Migration {
 
             $table->string('title_full_index')->index();
             $table->string('description_full_index')->index();
+            $table->fullText(['title_full_index']);
+            $table->fullText(['description_full_index']);
             $table->fullText(['title_full_index', 'description_full_index'],'full_text_index');
 
             $table->timestamps();
