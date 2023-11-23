@@ -35,6 +35,8 @@ class ResultStoreAction
         $this->storeFirstRowSpeed();
         $this->storeLastRowSpeed();
         $this->storeNormalLikeOneColumn($key);
+        $this->storeIndexLikeOneColumn($key);
+        $this->storeIndexLikeTwoColumn($key);
         $this->storeNormalLikeTwoColumn($key);
         $this->storeFullTextColumn($key);
         $this->storeFullTextIndexColumn($key);
@@ -111,7 +113,17 @@ class ResultStoreAction
     {
         $query = Lorem::query()->where('title','like',"%$key%");
         Result::query()->create([
-            'type' => ResultTypeEnum::NORMAL_LIKE_ONE_COLUMN,
+            'type' => ResultTypeEnum::NORMAL_LIKE_1_COL,
+            'search_key' => $key,
+            'search_type' => ResultSearchTypeEnum::GET,
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
+        ]);
+    }
+    private function storeIndexLikeOneColumn($key): void
+    {
+        $query = Lorem::query()->where('title_index','like',"%$key%");
+        Result::query()->create([
+            'type' => ResultTypeEnum::INDEX_LIKE_1_COL,
             'search_key' => $key,
             'search_type' => ResultSearchTypeEnum::GET,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
@@ -121,7 +133,17 @@ class ResultStoreAction
     {
         $query = Lorem::query()->where('title','like',"%$key%")->orWhere('description','like',"%$key%");
         Result::query()->create([
-            'type' => ResultTypeEnum::NORMAL_LIKE_TWO_COLUMN,
+            'type' => ResultTypeEnum::NORMAL_LIKE_2_COL,
+            'search_key' => $key,
+            'search_type' => ResultSearchTypeEnum::GET,
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
+        ]);
+    }
+    private function storeIndexLikeTwoColumn($key): void
+    {
+        $query = Lorem::query()->where('title_index','like',"%$key%")->orWhere('description_index','like',"%$key%");
+        Result::query()->create([
+            'type' => ResultTypeEnum::INDEX_LIKE_2_COL,
             'search_key' => $key,
             'search_type' => ResultSearchTypeEnum::GET,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
@@ -131,7 +153,7 @@ class ResultStoreAction
     {
         $query = Lorem::query()->whereFullText(["title_full","description_full"],$key);
         Result::query()->create([
-            'type' => ResultTypeEnum::FULL_TEXT,
+            'type' => ResultTypeEnum::FULL_TEXT_2_COL,
             'search_key' => $key,
             'search_type' => ResultSearchTypeEnum::GET,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
@@ -141,7 +163,7 @@ class ResultStoreAction
     {
         $query = Lorem::query()->whereFullText(["title_full_index","description_full_index"],$key);
         Result::query()->create([
-            'type' => ResultTypeEnum::FULL_TEXT_INDEX,
+            'type' => ResultTypeEnum::FULL_TEXT_INDEX_2_COL,
             'search_key' => $key,
             'search_type' => ResultSearchTypeEnum::GET,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
