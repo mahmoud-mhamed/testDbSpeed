@@ -14,7 +14,7 @@ class LoremIndexAction
 
     public function handle()
     {
-//        ResultStoreAction::make()->storeSearch('test');
+        ResultStoreAction::make()->storeSearch('test');
         $total_row=Lorem::query()->count();
         $results=Result::orderBy('id','desc')->paginate(10);
 
@@ -24,10 +24,10 @@ class LoremIndexAction
         $averages[]=$this->getAvg(ResultSearchTypeEnum::FIND);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::FIND_IN_TOP);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::NORMAL_LIKE_ONE_COLUMN);
-        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::FULL_TEXT_LIKE);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::NORMAL_LIKE_TWO_COLUMN);
         $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::INDEX_LIKE_ONE_COLUMN);
-        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::FULL_TEXT_INDEX_LIKE);
-//        Lorem::query()->latest('id')->first();
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::FULL_TEXT);
+        $averages[]=$this->getAvg(ResultSearchTypeEnum::GET,ResultTypeEnum::FULL_TEXT_INDEX);
         return view('lorem',compact('results','total_row','averages'));
     }
 

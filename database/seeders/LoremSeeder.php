@@ -13,7 +13,8 @@ class LoremSeeder extends Seeder
     public function run(): void
     {
         Lorem::truncate();
-        for ($i = 0; $i <= 1000; $i++) {
+//        for ($i = 0; $i <= 1000; $i++) {
+        for ($i = 0; $i <= 1; $i++) {
             Lorem::factory()->count(1000)->create();
         }
     }

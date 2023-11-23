@@ -35,7 +35,9 @@ class ResultStoreAction
         $this->storeFirstRowSpeed();
         $this->storeLastRowSpeed();
         $this->storeNormalLikeOneColumn($key);
-        $this->storeFullTextLikeColumn($key);
+        $this->storeNormalLikeTwoColumn($key);
+        $this->storeFullTextColumn($key);
+        $this->storeFullTextIndexColumn($key);
     }
 
     public function getQueryLog($query, ResultSearchTypeEnum $searchTypeEnum=ResultSearchTypeEnum::FIRST,$key=null,$find_id=null)
@@ -115,11 +117,31 @@ class ResultStoreAction
             ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
         ]);
     }
-    private function storeFullTextLikeColumn($key): void
+    private function storeNormalLikeTwoColumn($key): void
     {
-        $query = Lorem::query()->whereFullText(['title_full','description_full'],"%$key%");
+        $query = Lorem::query()->where('title','like',"%$key%")->orWhere('description','like',"%$key%");
         Result::query()->create([
-            'type' => ResultTypeEnum::FULL_TEXT_LIKE,
+            'type' => ResultTypeEnum::NORMAL_LIKE_TWO_COLUMN,
+            'search_key' => $key,
+            'search_type' => ResultSearchTypeEnum::GET,
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
+        ]);
+    }
+    private function storeFullTextColumn($key): void
+    {
+        $query = Lorem::query()->whereFullText(["title_full","description_full"],$key);
+        Result::query()->create([
+            'type' => ResultTypeEnum::FULL_TEXT,
+            'search_key' => $key,
+            'search_type' => ResultSearchTypeEnum::GET,
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
+        ]);
+    }
+    private function storeFullTextIndexColumn($key): void
+    {
+        $query = Lorem::query()->whereFullText(["title_full_index","description_full_index"],$key);
+        Result::query()->create([
+            'type' => ResultTypeEnum::FULL_TEXT_INDEX,
             'search_key' => $key,
             'search_type' => ResultSearchTypeEnum::GET,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
