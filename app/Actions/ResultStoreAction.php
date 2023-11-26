@@ -112,7 +112,7 @@ class ResultStoreAction
     }
     private function storeNormalLike1Col($key): void
     {
-        $query = Lorem::query()->where('title','like',"%$key%")->select('title','description');
+        $query = Lorem::query()->where('title','like',"%$key%")->select('title');
         Result::query()->create([
             'type' => ResultTypeEnum::NORMAL_LIKE_1COL,
             'search_key' => $key,
@@ -122,7 +122,7 @@ class ResultStoreAction
     }
     private function storeIndexLike1Col($key): void
     {
-        $query = Lorem::query()->where('title_index','like',"%$key%")->select('title_index','description_index');
+        $query = Lorem::query()->where('title_index','like',"%$key%")->select('title_index');
         Result::query()->create([
             'type' => ResultTypeEnum::INDEX_LIKE_1COL,
             'search_key' => $key,
@@ -164,7 +164,7 @@ class ResultStoreAction
     }
     private function storeFullText1Col($key): void
     {
-        $query = Lorem::query()->whereFullText(["title_full_one"],$key)->select('title_full_one','description');
+        $query = Lorem::query()->whereFullText(["title_full_one"],$key)->select('title_full_one');
         Result::query()->create([
             'type' => ResultTypeEnum::FULL_TEXT_1COL,
             'search_key' => $key,
