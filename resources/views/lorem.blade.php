@@ -7,7 +7,7 @@
                 <form method="post" class="flex " action="{{route('search')}}">
                     @csrf
                     <div>
-                        <input class="p-2 rounded-md" type="search" name="search"
+                        <input class="p-2 rounded-md" type="search" value="Provident" name="search"
                                placeholder="please enter search key"/>
                         @if($errors->has('search'))
                             <div class="text-sm text-red-500">{{ $errors->first('search') }}</div>
