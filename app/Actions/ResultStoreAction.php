@@ -39,6 +39,7 @@ class ResultStoreAction
         $this->storeIndexLike2Column($key);
         $this->storeNormalLike2Column($key);
         $this->storeFullText1Col($key);
+        $this->storeFullText1ColIndex($key);
         $this->storeFullText2Column($key);
         $this->storeFullTextIndex2Col($key);
     }
@@ -47,7 +48,7 @@ class ResultStoreAction
     {
         DB::connection()->enableQueryLog();
         if ($searchTypeEnum === ResultSearchTypeEnum::FIRST) {
-            $r=$query->clone()->first();
+            $r=$query->clone()/*->orderBy('id')*/->first();
             $count=$r?1:0;
         } elseif ($searchTypeEnum === ResultSearchTypeEnum::LAST) {
             $r=$query->clone()->latest('id')->first();
@@ -164,9 +165,19 @@ class ResultStoreAction
     }
     private function storeFullText1Col($key): void
     {
-        $query = Lorem::query()->whereFullText(["title_full_one"],$key)->select('title_full_one');
+        $query = Lorem::query()->whereFullText(["title_full"],$key)->select('title_full');
         Result::query()->create([
             'type' => ResultTypeEnum::FULL_TEXT_1COL,
+            'search_key' => $key,
+            'search_type' => ResultSearchTypeEnum::GET,
+            ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)
+        ]);
+    }
+    private function storeFullText1ColIndex($key): void
+    {
+        $query = Lorem::query()->whereFullText(["title_full_index"],$key)->select('title_full_index');
+        Result::query()->create([
+            'type' => ResultTypeEnum::FULL_TEXT_1_COL_INDEX,
             'search_key' => $key,
             'search_type' => ResultSearchTypeEnum::GET,
             ...$this->getQueryLog($query, ResultSearchTypeEnum::GET)

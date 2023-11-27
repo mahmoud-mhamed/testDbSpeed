@@ -13,15 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string description_index
  * @property string title_full_index
  * @property string description_full_index
- * @property string title_full_one
- * @property string description_full_one
 */
 class Lorem extends Model
 {
     use HasFactory;
     protected $fillable= [
         'title', 'description',
-        'title_full_one','description_full_one',
         'title_full', 'description_full',
         'title_index', 'description_index',
         'title_full_index', 'description_full_index'

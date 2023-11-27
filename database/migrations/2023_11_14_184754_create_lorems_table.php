@@ -23,12 +23,6 @@ return new class extends Migration {
             $table->fullText(['description_full']);
 
 
-            $table->string('title_full_one');
-            $table->string('description_full_one');
-            $table->fullText(['title_full_one']);
-            $table->fullText(['description_full_one']);
-
-
             $table->string('title_index');
             $table->string('description_index');
 

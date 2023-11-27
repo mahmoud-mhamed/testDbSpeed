@@ -27,9 +27,6 @@ class LoremFactory extends Factory
             'title' => $title,
             'description' => $description,
 
-            'title_full_one' => $title,
-            'description_full_one' => $description,
-
             'title_index' => $title,
             'description_index' => $description,
 
