@@ -7,7 +7,7 @@
                 <form method="post" class="flex " action="{{route('search')}}">
                     @csrf
                     <div>
-                        <input class="p-2 rounded-md" type="search" value="Provident" name="search"
+                        <input class="p-2 rounded-md" type="search" value="Provi" value3="Provident" name="search"
                                placeholder="please enter search key"/>
                         @if($errors->has('search'))
                             <div class="text-sm text-red-500">{{ $errors->first('search') }}</div>
@@ -31,6 +31,12 @@
             @endforeach
         </section>
 
+        <section class="mt-3">
+            <h1>Notes</h1>
+            <div class="alert">
+                A simple primary alert—check it out!
+            </div>
+        </section>
         <h2 class="text-lg flex justify-between font-medium text-gray-800 dark:text-white mt-6">
             <p>Search Result</p>
             <p>

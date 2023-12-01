@@ -16,11 +16,11 @@ return new class extends Migration {
             $table->string('title');
             $table->string('description');
 
-            $table->string('title_full');
-            $table->string('description_full');
+            $table->string('title_full')->fulltext();
+            $table->string('description_full')->fulltext();
             $table->fullText(['title_full', 'description_full']);
-            $table->fullText(['title_full']);
-            $table->fullText(['description_full']);
+//            $table->fullText(['title_full']);
+//            $table->fullText(['description_full']);
 
 
             $table->string('title_index');

@@ -30,14 +30,15 @@ class ResultStoreAction
 
     public function storeSearch($key): void
     {
-        $this->storeFindById(1000000,ResultSearchTypeEnum::FIND);
-        $this->storeFindById(1,ResultSearchTypeEnum::FIND_IN_TOP);
-        $this->storeFirstRowSpeed();
-        $this->storeLastRowSpeed();
-        $this->storeNormalLike1Col($key);
-        $this->storeIndexLike1Col($key);
-        $this->storeIndexLike2Column($key);
-        $this->storeNormalLike2Column($key);
+//        $this->storeFindById(1000000,ResultSearchTypeEnum::FIND);
+//        $this->storeFindById(1,ResultSearchTypeEnum::FIND_IN_TOP);
+//        $this->storeFirstRowSpeed();
+//        $this->storeLastRowSpeed();
+//        $this->storeNormalLike1Col($key);
+//        $this->storeIndexLike1Col($key);
+//        $this->storeIndexLike2Column($key);
+//        $this->storeNormalLike2Column($key);
+
         $this->storeFullText1Col($key);
         $this->storeFullText1ColIndex($key);
         $this->storeFullText2Column($key);
@@ -165,6 +166,7 @@ class ResultStoreAction
     }
     private function storeFullText1Col($key): void
     {
+//        $query = Lorem::query()->whereFullText(["title_full"],$key, ['expanded' => true,'mode' => 'boolean'])->select('title_full');
         $query = Lorem::query()->whereFullText(["title_full"],$key)->select('title_full');
         Result::query()->create([
             'type' => ResultTypeEnum::FULL_TEXT_1COL,

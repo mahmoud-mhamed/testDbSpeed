@@ -14,28 +14,6 @@ class LoremIndexAction
 
     public function handle()
     {
-        /*$key = 'Provident';*/
-        /*dd(
-            Lorem::query()
-                ->whereFullText(["title_full", "description_full"], $key)
-                ->select('title_full','description_full')
-                ->get(),
-            Lorem::query()
-                ->whereFullText(["title_full_one"], $key)
-                ->select('title_full')
-                ->get(),
-            Lorem::query()
-                ->whereFullText(["title_full_index"], $key)
-                ->select('title_full_index')
-                ->get(),
-            Lorem::query()
-                ->where('title', 'like', "%$key%")->orWhere('description', 'like', "%$key%")
-                ->get(),
-            Lorem::query()
-                ->where('title', 'like', "%$key%")
-                ->get(),
-        );*/
-//        ResultStoreAction::make()->storeSearch('Provident');
         $total_row = Lorem::query()->count();
         $results = Result::orderBy('id', 'desc')->paginate(10);
 
@@ -57,6 +35,13 @@ class LoremIndexAction
 
     private function getAvg(ResultSearchTypeEnum $resultSearchTypeEnum, ResultTypeEnum $resultTypeEnum = null): array
     {
+        $class='bg-white';
+        if (in_array($resultTypeEnum,[
+            ResultTypeEnum::FULL_TEXT_1COL,ResultTypeEnum::FULL_TEXT_1_COL_INDEX,
+            ResultTypeEnum::FULL_TEXT_2COL,ResultTypeEnum::FULL_TEXT_INDEX_2COL
+        ])){
+            $class='bg-amber-100 ';
+        }
         $query = Result::where('type', $resultTypeEnum)->where('search_type', $resultSearchTypeEnum);
         return [
             'name' => $resultSearchTypeEnum->value . ($resultTypeEnum ? ' - ' . $resultTypeEnum->value : ''),
@@ -68,6 +53,7 @@ class LoremIndexAction
             'first_query' => $query->first()?->query,
             'resultSearchTypeEnum' => $resultSearchTypeEnum,
             'resultTypeEnum' => $resultTypeEnum,
+            'class'=>$class,
         ];
     }
 
